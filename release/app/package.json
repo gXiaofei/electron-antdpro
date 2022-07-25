@@ -1,0 +1,13 @@
+{
+  "name": "ibp",
+  "version": "1.0.0",
+  "description": "投行承做助手",
+  "main": "./dist/main/main.js",
+  "author": "ibp",
+  "scripts": {
+    "electron-rebuild": "node -r ts-node/register ../../scripts/electron-rebuild.js",
+    "postinstall": "npm run electron-rebuild && npm run link-modules",
+    "link-modules": "node -r ts-node/register ../../scripts/link-modules.ts"
+  },
+  "dependencies": {}
+}

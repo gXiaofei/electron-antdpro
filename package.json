@@ -1,8 +1,8 @@
 {
-  "name": "ant-design-pro",
-  "version": "6.0.0-beta.1",
+  "name": "ibp",
+  "version": "1.0.0",
   "private": true,
-  "description": "An out-of-box UI solution for enterprise applications",
+  "description": "electron antd pro",
   "scripts": {
     "analyze": "cross-env ANALYZE=1 max build",
     "build": "max build",

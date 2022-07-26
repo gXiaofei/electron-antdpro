@@ -2,7 +2,7 @@
 
 import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron';
 import path from 'path';
-import { HEIGHT, LOGIN_HEIGHT, LOGIN_WIDTH, MIN_HEIGHT, MIN_WIDTH, WIDTH } from './constants';
+import { LOGIN_HEIGHT, LOGIN_WIDTH, MIN_HEIGHT, MIN_WIDTH } from './constants';
 import { subscribe as subscribeStore } from './electronStore';
 import MenuBuilder from './menu';
 import showNotification from './showNotification';
@@ -42,17 +42,15 @@ ipcMain.on('ipc-example', async (event, arg) => {
 ipcMain.on('login', (event, args) => {
     if (args[0] === true) {
         if (mainWindow) {
-            if (mainWindow) {
-                mainWindow.setResizable(false);
-                mainWindow.setMinimumSize(LOGIN_WIDTH, LOGIN_HEIGHT);
-                mainWindow.setSize(LOGIN_WIDTH, LOGIN_HEIGHT, true);
-            }
+            mainWindow.setResizable(false);
+            mainWindow.setMinimumSize(LOGIN_WIDTH, LOGIN_HEIGHT);
+            mainWindow.setSize(LOGIN_WIDTH, LOGIN_HEIGHT, true);
         }
     } else {
         if (mainWindow) {
             mainWindow.setResizable(true);
             mainWindow.setMinimumSize(MIN_WIDTH, MIN_HEIGHT);
-            mainWindow.setSize(WIDTH, HEIGHT, true);
+            mainWindow.maximize();
         }
     }
 });

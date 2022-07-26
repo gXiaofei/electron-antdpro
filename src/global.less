@@ -4,6 +4,8 @@ html,
 body,
 #root {
     height: 100%;
+    font-family: 'Helvetica Neue', 'PingFang SC-Regular', 'Microsoft YaHei', Helvetica, Arial,
+        'Hiragino Sans GB', sans-serif;
 }
 
 .colorWeak {
@@ -28,8 +30,53 @@ body {
 }
 
 ul,
+li,
 ol {
     list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+/*防止拖动*/
+img {
+    vertical-align: middle;
+    border: 0;
+}
+
+select,
+input {
+    vertical-align: middle;
+}
+
+textarea {
+    resize: none;
+}
+
+/*清除默认样式*/
+html,
+body,
+ul,
+li,
+ol,
+dl,
+dd,
+dt,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+form,
+fieldset,
+legend,
+img,
+input {
+    margin: 0;
+    padding: 0;
 }
 
 @media (max-width: @screen-xs) {

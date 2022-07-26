@@ -3,18 +3,19 @@ import { Settings as LayoutSettings } from '@ant-design/pro-components';
 const Settings: LayoutSettings & {
     pwa?: boolean;
     logo?: string;
+    headerHeight?: number;
 } = {
     navTheme: 'light',
     // 拂晓蓝
     primaryColor: '#1890ff',
     layout: 'mix',
     contentWidth: 'Fluid',
-    fixedHeader: false,
+    fixedHeader: true,
     fixSiderbar: true,
     colorWeak: false,
-    title: 'Ant Design Pro',
+    headerHeight: 56,
+    title: '投行承做助手',
     pwa: false,
-    logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
     iconfontUrl: '',
 };
 

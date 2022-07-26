@@ -1,17 +1,23 @@
 {
     "compilerOptions": {
-        "outDir": "build/dist",
-        "module": "esnext",
-        "target": "esnext",
-        "lib": ["esnext", "dom"],
+        "outDir": "release/app/dist",
+        "module": "commonjs",
+        "target": "es2021",
+        "lib": ["es2021", "dom"],
         "sourceMap": true,
-        "baseUrl": ".",
+        "baseUrl": "./src",
         "jsx": "react-jsx",
+        "declaration": true,
+        "declarationMap": true,
+        "pretty": true,
         "resolveJsonModule": true,
         "allowSyntheticDefaultImports": true,
+        "noFallthroughCasesInSwitch": true,
         "moduleResolution": "node",
+        "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
         "noImplicitReturns": true,
+        "noUnusedParameters": true,
         "suppressImplicitAnyIndexErrors": true,
         "noUnusedLocals": true,
         "allowJs": true,
@@ -37,5 +43,18 @@
         "jest.config.js",
         "mock/*"
     ],
-    "exclude": ["node_modules", "build", "dist", "scripts", "src/.umi/*", "webpack", "jest"]
+    "exclude": [
+        "node_modules",
+        "build",
+        "dist",
+        "scripts",
+        "src/.umi/*",
+        "webpack",
+        "jest",
+        "tests",
+        "test",
+        "release/build",
+        "release/app/dist",
+        "dll"
+    ]
 }

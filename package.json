@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "private": true,
   "description": "electron antd pro",
+  "main": "./src/main/main.ts",
   "scripts": {
     "analyze": "cross-env ANALYZE=1 max build",
-    "build": "max build",
+    "rebuild": "electron-rebuild --parallel --types prod,dev,optional --module-dir release/app",
+    "build:renderer": "max build",
+    "build:main": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./config/webpack.config.main.ts",
+    "build": "concurrently \"npm run build:renderer\" \"npm run build:main\"",
     "dev": "npm run start:dev",
     "i18n-remove": "pro i18n-remove --locale=zh-CN --write",
-    "postinstall": "max setup",
+    "postinstall": "concurrently \"max setup\" \"ts-node ./scripts/check-native-dep.js && electron-builder install-app-deps\"",
     "lint": "npm run lint:js && npm run lint:prettier && npm run tsc",
     "lint-staged": "lint-staged",
     "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx ",
@@ -19,11 +23,19 @@
     "prepare": "husky install",
     "prettier": "prettier -c --write \"src/**/*\"",
     "serve": "umi-serve",
-    "start": "cross-env UMI_ENV=dev max dev",
+    "start:renderer": "cross-env UMI_ENV=dev max dev",
+    "start:main": "cross-env NODE_ENV=development electronmon -r ts-node/register/transpile-only .",
+    "start": "concurrently \"npm run start:renderer\" \"wait-on http://127.0.0.1:8000 && npm run start:main\"",
+    "start:preload": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./config/webpack.config.preload.ts",
     "start:dev": "cross-env REACT_APP_ENV=dev MOCK=none UMI_ENV=dev max dev",
     "start:no-mock": "cross-env MOCK=none UMI_ENV=dev max dev",
     "start:pre": "cross-env REACT_APP_ENV=pre UMI_ENV=dev max dev",
     "start:test": "cross-env REACT_APP_ENV=test MOCK=none UMI_ENV=dev max dev",
+    "build-icon": "electron-icon-builder --input=./src/assets/logo.png --output=temp --flatten",
+    "debug-mac:prod": "DEBUG_PROD=true npm run package",
+    "debug-win:prod": "npx cross-env DEBUG_PROD=true npm run package",
+    "package": "ts-node ./scripts/clean.js dist build && npm run build && npm run builder",
+    "builder": "electron-builder build -m",
     "test": "max test",
     "test:component": "max test ./src/components",
     "tsc": "tsc --noEmit"
@@ -172,5 +184,12 @@
     "extraResources": [
       "./src/assets/**"
     ]
+  },
+  "electronmon": {
+    "patterns": [
+      "!**/**",
+      "src/main/*"
+    ],
+    "logLevel": "quiet"
   }
 }

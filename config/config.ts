@@ -5,10 +5,14 @@ import defaultSettings from './defaultSettings';
 import proxy from './proxy';
 import routes from './routes';
 
-const { REACT_APP_ENV } = process.env;
+const { REACT_APP_ENV, NODE_ENV } = process.env;
+const isProd = NODE_ENV === 'production';
 
 export default defineConfig({
     hash: true,
+    history: { type: 'hash' },
+    publicPath: isProd ? './' : '/',
+    outputPath: './release/app/dist/renderer',
     antd: {},
     request: {},
     initialState: {},

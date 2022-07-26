@@ -38,3 +38,8 @@ screenshot
 .eslintcache
 
 build
+
+
+release/app/dist
+release/build
+dll

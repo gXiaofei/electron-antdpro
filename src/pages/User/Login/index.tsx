@@ -18,6 +18,7 @@ import {
 import { FormattedMessage, history, SelectLang, useIntl, useModel } from '@umijs/max';
 import { Alert, message, Tabs } from 'antd';
 import React, { useState } from 'react';
+import logo from '../../../../public/logo.svg';
 import styles from './index.less';
 
 const LoginMessage: React.FC<{
@@ -88,7 +89,7 @@ const Login: React.FC = () => {
             </div>
             <div className={styles.content}>
                 <LoginForm
-                    logo={<img alt="logo" src="/logo.svg" />}
+                    logo={<img alt="logo" src={logo} />}
                     title="Ant Design"
                     subTitle={intl.formatMessage({ id: 'pages.layouts.userLayout.title' })}
                     initialValues={{

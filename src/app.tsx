@@ -52,6 +52,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
         waterMarkProps: {
             content: initialState?.currentUser?.name,
         },
+        pageTitleRender: false,
         footerRender: () => <Footer />,
         onPageChange: () => {
             const { location } = history;
@@ -84,9 +85,10 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
                             enableDarkTheme
                             settings={initialState?.settings}
                             onSettingChange={(settings) => {
+                                console.log(213, settings);
                                 setInitialState((preInitialState) => ({
                                     ...preInitialState,
-                                    settings,
+                                    // settings,
                                 }));
                             }}
                         />

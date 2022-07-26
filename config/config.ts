@@ -10,7 +10,9 @@ const isProd = NODE_ENV === 'production';
 
 export default defineConfig({
     hash: true,
-    history: { type: 'hash' },
+    history: {
+        type: 'hash',
+    },
     publicPath: isProd ? './' : '/',
     outputPath: './release/app/dist/renderer',
     antd: {},
@@ -23,15 +25,6 @@ export default defineConfig({
         siderWidth: 208,
         ...defaultSettings,
     },
-    // https://umijs.org/zh-CN/plugins/plugin-locale
-    locale: {
-        // default zh-CN
-        default: 'zh-CN',
-        antd: true,
-        // default true, when it is true, will use `navigator.language` overwrite default
-        baseNavigator: true,
-    },
-
     targets: {
         ie: 11,
     },

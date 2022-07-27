@@ -53,6 +53,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@ant-design/pro-components": "1.1.1",
+    "@parcel/watcher": "^2.0.5",
     "@umijs/route-utils": "^2.0.0",
     "antd": "^4.20.0",
     "classnames": "^2.3.0",
@@ -60,6 +61,7 @@
     "electron-log": "^4.4.8",
     "electron-store": "^8.0.2",
     "electron-updater": "^5.0.5",
+    "fs-extra": "^10.1.0",
     "lodash": "^4.17.0",
     "moment": "^2.29.0",
     "omit.js": "^2.0.2",
@@ -76,6 +78,7 @@
     "@commitlint/config-conventional": "^17.0.3",
     "@types/classnames": "^2.3.1",
     "@types/express": "^4.17.0",
+    "@types/fs-extra": "^9.0.13",
     "@types/history": "^4.7.0",
     "@types/jest": "^26.0.0",
     "@types/lodash": "^4.14.0",

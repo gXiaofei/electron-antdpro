@@ -1,18 +1,17 @@
-import logo from '@/assets/logoTitle.png';
-import Footer from '@/components/Footer';
+import HeaderTitleRender from '@/components/HeaderTitleRender';
 import IconFont from '@/components/IconFont';
 import RightContent from '@/components/RightContent';
-import { LinkOutlined, SettingOutlined } from '@ant-design/icons';
+import { SettingOutlined } from '@ant-design/icons';
 import type { Settings as LayoutSettings } from '@ant-design/pro-components';
-import { SettingDrawer } from '@ant-design/pro-components';
 import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history, Link } from '@umijs/max';
-import { ConfigProvider } from 'antd';
 import defaultSettings from '../config/defaultSettings';
+import ChildrenRender from './pages/ChildrenRender';
+import Loading from './pages/loading';
 import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
 
 const isDev = process.env.NODE_ENV === 'development';
-const loginPath = '/user/login';
+const loginPath = '/login';
 let afterRoute = '';
 
 /**
@@ -51,7 +50,7 @@ export async function getInitialState(): Promise<{
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) => {
     const links = [
-        <Link key="setting" to="/setting">
+        <Link key="setting" to="/transmissionList">
             <IconFont style={{ fontSize: '16px' }} type="icon-chuanshuliebiao" />
             <span>传输列表</span>
         </Link>,
@@ -61,24 +60,17 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
         </Link>,
     ];
 
-    if (isDev) {
-        links.push(
-            <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
-                <LinkOutlined />
-                <span>OpenAPI 文档</span>
-            </Link>,
-        );
-    }
-
     return {
-        logo,
-        rightContentRender: () => <RightContent />,
-        disableContentMargin: false,
-        waterMarkProps: {
-            content: initialState?.currentUser?.name,
+        siderWidth: 200,
+        contentStyle: { margin: '15px' },
+        menu: {
+            autoClose: false,
         },
+        breadcrumbRender: false,
+        headerTitleRender: () => <HeaderTitleRender />,
+        rightContentRender: () => <RightContent />,
         pageTitleRender: false,
-        footerRender: () => <Footer />,
+        // footerRender: () => <Footer />,
         onPageChange: () => {
             const { location } = history;
             console.log(history);
@@ -90,11 +82,14 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
         iconfontUrl: require('@/assets/iconfont.js'),
         links,
         menuHeaderRender: undefined,
+
         // 自定义 403 页面
         // unAccessible: <div>unAccessible</div>,
-        // 增加一个 loading 的状态
+
         childrenRender: (children, props) => {
-            // if (initialState?.loading) return <Loading />;
+            // 增加一个 loading 的状态
+            if (initialState?.loading) return <Loading />;
+            return <ChildrenRender {...props}>{children}</ChildrenRender>;
             // 修改主题
             // ConfigProvider.config({
             //     theme: {
@@ -102,9 +97,10 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
             //     },
             // });
             return (
-                <ConfigProvider>
+                // <ConfigProvider>
+                <>
                     {children}
-                    {!props.location?.pathname?.includes('/login') && (
+                    {/* {!props.location?.pathname?.includes('/login') && (
                         <SettingDrawer
                             disableUrlParams
                             enableDarkTheme
@@ -116,8 +112,9 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
                                 }));
                             }}
                         />
-                    )}
-                </ConfigProvider>
+                    )} */}
+                </>
+                // </ConfigProvider>
             );
         },
         ...initialState?.settings,
@@ -128,10 +125,10 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function onRouteChange({ location, clientRoutes, routes, action }) {
     const { pathname } = location;
-    if (pathname === '/user/login') {
+    if (pathname === '/login') {
         window?.electron?.ipcRenderer?.sendMessage('login', [true]);
     } else {
-        if (afterRoute === '/user/login') {
+        if (afterRoute === '/login' || afterRoute === '') {
             window?.electron?.ipcRenderer?.sendMessage('login', [false]);
         }
     }

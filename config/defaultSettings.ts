@@ -6,8 +6,7 @@ const Settings: LayoutSettings & {
     headerHeight?: number;
 } = {
     navTheme: 'light',
-    // 拂晓蓝
-    primaryColor: '#1890ff',
+    primaryColor: '#C50808',
     layout: 'mix',
     contentWidth: 'Fluid',
     fixedHeader: true,

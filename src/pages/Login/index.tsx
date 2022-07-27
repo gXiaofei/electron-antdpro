@@ -50,6 +50,7 @@ const resetPassword: HeaderProps = {
 };
 
 const Login: React.FC = () => {
+    const [loading, setLoading] = useState<boolean>(false);
     const [loginMessage, setLoginState] = useState<LoginMessageType>({});
     const [type, setType] = useState<FormType>('login');
     const [headerProps, setHeaderProps] = useState<HeaderProps>(loginProps);
@@ -110,6 +111,9 @@ const Login: React.FC = () => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { username, password, mobile, captcha, newPassword, repeatPassword } = values;
 
+        setLoginState({});
+        setLoading(true);
+
         switch (type) {
             case 'login':
                 try {
@@ -117,12 +121,12 @@ const Login: React.FC = () => {
                     const msg = await login({ ...values, type });
 
                     if (msg.status === 'ok') {
-                        const defaultLoginSuccessMessage = '登录成功！';
-                        message.success(defaultLoginSuccessMessage);
+                        message.success('登录成功！');
                         await fetchUserInfo();
                         window?.electron?.ipcRenderer?.sendMessage('login', [false]);
                         const urlParams = new URL(window.location.href).searchParams;
                         history.push(urlParams.get('redirect') || '/');
+                        setLoading(false);
                         return;
                     }
                     setLoginState({
@@ -135,6 +139,7 @@ const Login: React.FC = () => {
                     console.log(error);
                     message.error(defaultLoginFailureMessage);
                 }
+                setLoading(false);
                 break;
             case 'forgetPassword':
                 setType('resetPassword');
@@ -167,7 +172,7 @@ const Login: React.FC = () => {
                                 fieldProps={{
                                     size: 'large',
                                 }}
-                                placeholder="请输入账号或手机号"
+                                placeholder="请输入账号或手机号: admin"
                                 rules={[
                                     {
                                         required: true,
@@ -180,7 +185,7 @@ const Login: React.FC = () => {
                                 fieldProps={{
                                     size: 'large',
                                 }}
-                                placeholder="请输入登录密码"
+                                placeholder="请输入登录密码: password"
                                 rules={[
                                     {
                                         required: true,
@@ -278,12 +283,22 @@ const Login: React.FC = () => {
                             />
                         </>
                     )}
-                    <Button size="large" type="primary" htmlType="submit" style={{ width: '100%' }}>
+                    <Button
+                        loading={loading}
+                        size="large"
+                        type="primary"
+                        htmlType="submit"
+                        style={{ width: '100%' }}
+                    >
                         {submitText()}
                     </Button>
                 </Form>
                 <div className={styles.formFooter}>
-                    {type !== 'login' && <a onClick={() => setType('login')}>去登陆</a>}
+                    {type === 'login' ? (
+                        <a>oa登录</a>
+                    ) : (
+                        <a onClick={() => setType('login')}>去登陆</a>
+                    )}
                     <a
                         style={{
                             float: 'right',

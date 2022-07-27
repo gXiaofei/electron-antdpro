@@ -1,10 +1,9 @@
 // https://umijs.org/config/
 import { defineConfig } from '@umijs/max';
-import { join } from 'path';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
 import routes from './routes';
-
+import theme from './theme';
 const { REACT_APP_ENV, NODE_ENV } = process.env;
 const isProd = NODE_ENV === 'production';
 
@@ -21,8 +20,6 @@ export default defineConfig({
     model: {},
     layout: {
         // https://umijs.org/zh-CN/plugins/plugin-layout
-        locale: true,
-        siderWidth: 208,
         ...defaultSettings,
     },
     targets: {
@@ -36,7 +33,8 @@ export default defineConfig({
         // 如果不想要 configProvide 动态设置主题需要把这个设置为 default
         // 只有设置为 variable， 才能使用 configProvide 动态设置主色调
         // https://ant.design/docs/react/customize-theme-variable-cn
-        'root-entry-name': 'variable',
+        'root-entry-name': 'default',
+        ...theme,
     },
     ignoreMomentLocale: true,
     proxy: proxy[REACT_APP_ENV || 'dev'],
@@ -46,18 +44,4 @@ export default defineConfig({
     // Fast Refresh 热更新
     fastRefresh: true,
     presets: ['umi-presets-pro'],
-    openAPI: [
-        {
-            requestLibPath: "import { request } from '@umijs/max'",
-            // 或者使用在线的版本
-            // schemaPath: "https://gw.alipayobjects.com/os/antfincdn/M%24jrzTTYJN/oneapi.json"
-            schemaPath: join(__dirname, 'oneapi.json'),
-            mock: false,
-        },
-        {
-            requestLibPath: "import { request } from '@umijs/max'",
-            schemaPath: 'https://gw.alipayobjects.com/os/antfincdn/CA1dOm%2631B/openapi.json',
-            projectName: 'swagger',
-        },
-    ],
 });

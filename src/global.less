@@ -4,8 +4,8 @@ html,
 body,
 #root {
     height: 100%;
-    font-family: 'Helvetica Neue', 'PingFang SC-Regular', 'Microsoft YaHei', Helvetica, Arial,
-        'Hiragino Sans GB', sans-serif;
+    // font-family: 'Helvetica Neue', 'PingFang SC-Regular', 'Microsoft YaHei', Helvetica, Arial,
+    //     'Hiragino Sans GB', sans-serif;
 }
 
 .colorWeak {
@@ -94,4 +94,37 @@ input {
             }
         }
     }
+}
+
+.ant-pro-page-container {
+    margin: 0 !important;
+    .ant-pro-page-container-children-content {
+        margin: 0 !important;
+    }
+}
+
+.ant-pro-menu-item-selected {
+    .anticon {
+        color: #fff !important;
+    }
+    .ant-pro-menu-item-title {
+        color: #fff !important;
+    }
+    background-color: #c50808 !important;
+}
+
+.ant-pro-menu-item > li {
+    &:hover {
+        .anticon {
+            color: #fff !important;
+        }
+        .ant-pro-menu-item-title {
+            color: #fff !important;
+        }
+        background-color: #ed6a66 !important;
+    }
+}
+
+.ant-page-header {
+    padding: 0;
 }

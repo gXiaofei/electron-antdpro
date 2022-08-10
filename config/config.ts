@@ -3,7 +3,7 @@ import { defineConfig } from '@umijs/max';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
 import routes from './routes';
-import theme from './theme';
+// import theme from './theme';
 const { REACT_APP_ENV, NODE_ENV } = process.env;
 const isProd = NODE_ENV === 'production';
 
@@ -34,7 +34,7 @@ export default defineConfig({
         // 只有设置为 variable， 才能使用 configProvide 动态设置主色调
         // https://ant.design/docs/react/customize-theme-variable-cn
         'root-entry-name': 'default',
-        ...theme,
+        // ...theme,
     },
     ignoreMomentLocale: true,
     proxy: proxy[REACT_APP_ENV || 'dev'],

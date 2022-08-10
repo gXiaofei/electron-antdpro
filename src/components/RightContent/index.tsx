@@ -1,10 +1,12 @@
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { useModel } from '@umijs/max';
-import { Space } from 'antd';
+import { Space, Switch } from 'antd';
 import React from 'react';
+import { useThemeSwitcher } from 'react-css-theme-switcher';
 import HeaderSearch from '../HeaderSearch';
 import Avatar from './AvatarDropdown';
 import styles from './index.less';
+
 export type SiderTheme = 'light' | 'dark';
 
 const GlobalHeaderRight: React.FC = () => {
@@ -20,6 +22,13 @@ const GlobalHeaderRight: React.FC = () => {
     if ((navTheme === 'dark' && layout === 'top') || layout === 'mix') {
         className = `${styles.right}  ${styles.dark}`;
     }
+    const [isDarkMode, setIsDarkMode] = React.useState();
+    const { switcher, currentTheme, status, themes } = useThemeSwitcher();
+
+    const toggleTheme = (isChecked) => {
+        setIsDarkMode(isChecked);
+        switcher({ theme: isChecked ? themes.dark : themes.light });
+    };
 
     return (
         <Space className={className}>
@@ -57,6 +66,7 @@ const GlobalHeaderRight: React.FC = () => {
                 <QuestionCircleOutlined />
             </span>
             <Avatar />
+            <Switch checked={isDarkMode} onChange={toggleTheme} />
         </Space>
     );
 };

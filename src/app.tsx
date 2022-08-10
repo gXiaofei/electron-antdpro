@@ -10,6 +10,13 @@ import ChildrenRender from './pages/ChildrenRender';
 import Loading from './pages/loading';
 import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
 
+import { ThemeSwitcherProvider } from 'react-css-theme-switcher';
+
+const themes = {
+    dark: './styles/dark-theme.css',
+    light: './styles/light-theme.css',
+};
+
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/login';
 let afterRoute = '';
@@ -68,7 +75,11 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
         },
         breadcrumbRender: false,
         headerTitleRender: () => <HeaderTitleRender />,
-        rightContentRender: () => <RightContent />,
+        rightContentRender: () => (
+            <ThemeSwitcherProvider themeMap={themes} defaultTheme="light">
+                <RightContent />
+            </ThemeSwitcherProvider>
+        ),
         pageTitleRender: false,
         // footerRender: () => <Footer />,
         onPageChange: () => {
@@ -89,6 +100,12 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
         childrenRender: (children, props) => {
             // 增加一个 loading 的状态
             if (initialState?.loading) return <Loading />;
+
+            return (
+                <ThemeSwitcherProvider themeMap={themes} defaultTheme="light">
+                    {children}
+                </ThemeSwitcherProvider>
+            );
             return <ChildrenRender {...props}>{children}</ChildrenRender>;
             // 修改主题
             // ConfigProvider.config({
@@ -133,4 +150,12 @@ export function onRouteChange({ location, clientRoutes, routes, action }) {
         }
     }
     afterRoute = pathname;
+}
+
+export function render(oldRender) {
+    return (
+        <ThemeSwitcherProvider themeMap={themes} defaultTheme="light">
+            {oldRender()}
+        </ThemeSwitcherProvider>
+    );
 }
